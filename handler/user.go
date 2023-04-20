@@ -41,10 +41,10 @@ func (h *userHandler) RegisterUser(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func (h* userHandler) Login(c *gin.Context) {
+func (h *userHandler) Login(c *gin.Context) {
 	var input user.LoginInput
 	err := c.ShouldBindJSON(&input)
-	if err!= nil {
+	if err != nil {
 		errors := helper.ErrorFormater(err)
 		errorMessage := gin.H{"error": errors}
 
@@ -54,7 +54,7 @@ func (h* userHandler) Login(c *gin.Context) {
 	}
 	loggedinUser, err := h.userService.Login(input)
 
-	if err!= nil{
+	if err != nil {
 		errorMessage := gin.H{"error": err.Error()}
 		response := helper.APIResponse("Login failed", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
@@ -67,34 +67,34 @@ func (h* userHandler) Login(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *userHandler) CheckEmailAvability(c *gin.Context){
+func (h *userHandler) CheckEmailAvability(c *gin.Context) {
 	var input user.CheckEmailInput
-    err := c.ShouldBindJSON(&input)
-    if err!= nil {
-        errors := helper.ErrorFormater(err)
-        errorMessage := gin.H{"error": errors}
+	err := c.ShouldBindJSON(&input)
+	if err != nil {
+		errors := helper.ErrorFormater(err)
+		errorMessage := gin.H{"error": errors}
 
-        response := helper.APIResponse("Check email failed", http.StatusUnprocessableEntity, "error", errorMessage)
-        c.JSON(http.StatusUnprocessableEntity, response)
-        return
-    }
+		response := helper.APIResponse("Check email failed", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
 
 	IsEmailAvailable, err := h.userService.IsEmailAvailable(input)
-	if err!= nil {
-		errorMessage := gin.H{"errors":"Server error"}
+	if err != nil {
+		errorMessage := gin.H{"errors": "Server error"}
 		response := helper.APIResponse("Check email failed", http.StatusUnprocessableEntity, "error", errorMessage)
-        c.JSON(http.StatusUnprocessableEntity, response)
-        return
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
 	}
 
 	data := gin.H{
-		"is_available":IsEmailAvailable,
+		"is_available": IsEmailAvailable,
 	}
 
 	metaMessage := "email is available"
 	if IsEmailAvailable {
-        metaMessage = "email has been registered"
-    }
+		metaMessage = "email has been registered"
+	}
 	response := helper.APIResponse(metaMessage, http.StatusOK, "success", data)
 	c.JSON(http.StatusOK, response)
 }
