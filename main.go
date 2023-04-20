@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"startup/handler"
 	"startup/user"
@@ -21,23 +20,12 @@ func main() {
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
 
-	userByEmail,err := userRepository.FindByEmail("budiprogkeren@gmail.com")
-	if err!= nil {
-        fmt.Print(err.Error())
-    }
-	if(userByEmail.ID == 0){
-		fmt.Println("user not found")
-	}else{
-		fmt.Println(userByEmail.Name)
-	}
-
 	userHandler := handler.NewUserHandler(userService)
 
 	router := gin.Default()
 	api := router.Group("/api/v1")
 
 	api.POST("/users", userHandler.RegisterUser)
+	api.POST("/sessions", userHandler.Login)
 	router.Run()
-
-
 }
