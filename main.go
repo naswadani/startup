@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"startup/auth"
 	"startup/handler"
@@ -22,6 +23,21 @@ func main() {
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 
+	token, err := authService.ValidateToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozfQ.r5NfhyQ-9XPKQj8yQADwrufD29lKODW00RZ-6GPX_Ww")
+	if err != nil {
+		fmt.Println("ERROR")
+		fmt.Println("ERROR")
+		fmt.Println("ERROR")
+	}
+	if token.Valid {
+		fmt.Println("VALID")
+		fmt.Println("VALID")
+		fmt.Println("VALID")
+	}else{
+		fmt.Println("INVAILED")
+		fmt.Println("INVAILED")
+		fmt.Println("INVAILED")
+	}
 	userHandler := handler.NewUserHandler(userService, authService)
 
 	router := gin.Default()
