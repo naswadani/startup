@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type Repository interface {
 	FindAll() ([]Campaign, error)
-	FindByUserID(userID string) ([]Campaign, error)
+	FindByUserID(userID int) ([]Campaign, error)
 }
 
 type repository struct {
