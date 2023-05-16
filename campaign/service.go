@@ -1,10 +1,10 @@
 package campaign
 
 type Service interface {
-	GetCampaigns(userID int)([]Campaign, error)
+	GetCampaigns(userID int) ([]Campaign, error)
 }
 
-type service struct{
+type service struct {
 	repository Repository
 }
 
