@@ -75,7 +75,7 @@ func (s *service) UpdateCampaign(inputID GetCampaignDetailInput, inputData Creat
 	}
 
 	if campaign.UserID != inputData.User.ID {
-		return campaign, errors.New("Not an onwer of the campaign")
+		return campaign, errors.New("not an onwer of the campaign")
 	}
 	campaign.Name = inputData.Name
 	campaign.ShortDescription = inputData.ShortDescription
@@ -97,7 +97,7 @@ func (s *service) SaveCampaignImage(input CreateCampaignImageInput, fieLocation 
 		return CampaignImage{}, err
 	}
 	if campaign.UserID != input.User.ID {
-		return CampaignImage{}, errors.New("Not an onwer of the campaign")
+		return CampaignImage{}, errors.New("not an onwer of the campaign")
 	}
 	isPrimary := 0
 	if input.IsPrimary {
